@@ -3,13 +3,13 @@ var fs = require('fs');
 const { format } = require('path');
 
 const app_debug_mode = true;
-const timezone_name = "Asia/Kathmandu";
+const timezone_name = "Asia/Kolkata";
 const msg_server_internal_error = "Server Internal Error"
 
 module.exports = {
 
-    ImagePath: () => {
-        return "http://192.168.1.2:3001/img/";
+    ImagePath:() => {
+        return "http://localhost:3001/img/";
     },
 
     ThrowHtmlError: (err, res) => {
@@ -105,15 +105,11 @@ module.exports = {
         return result;
     },
 
-    createNumber: (length = 6) => {
-        var chars = "0123456789"
+    fileNameGenerate: (extension) => {
+        var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         var result = '';
-        for (let i = length; i > 0; i--) {
-            result += chars[Math.floor(Math.random() * chars.length)];
-
-        }
-
-        return result;
+        for (let i = 10; i > 0; i--) result += chars[Math.floor(Math.random() * chars.length)];
+        return serverDateTime('YYYYMMDDHHmmssms') + result + '.' + extension;
     },
 
     Dlog: (log) => {
@@ -126,14 +122,7 @@ module.exports = {
 
     serverYYYYMMDDHHmmss:()=>{
         return serverYYYYMMDDHHmmss();
-    },
-    
-    fileNameGenerate: (extension) => {
-        var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        var result = '';
-        for (let i = 10; i > 0; i--) result += chars[Math.floor(Math.random() * chars.length)];
-        return serverDateTime('YYYYMMDDHHmmssms') + result + '.' + extension;
-    },
+    }
 
 }
 

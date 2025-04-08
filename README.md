@@ -1,60 +1,37 @@
-# Food Delivery Backend Api With Node Js Express REST API & Socket.io API 
+# Node.js Express Js Api Base Setup With MySQL & Socket.io
 
 # codeforany @codeforany
 
+- [Youtube Full Playlist: Node.js Express Js With REST Api & Socket.io Api ](https://www.youtube.com/playlist?list=PLzcRC7PA0xWRlYXalCqTqoC6csqUIJWCa)
+- [Youtube Channel: @codeforany](https://www.youtube.com/channel/UCdQTp9wRK5vAOlEQZf9PHSg)
+- [Youtube Channel Subscribe: @codeforany](https://www.youtube.com/channel/UCdQTp9wRK5vAOlEQZf9PHSg?sub_confirmation=1)
 
 
-<b> Admin Api: </b>
-1) Add Restaurant Api
-2) Update Restaurant Api
-3) Update Restaurant Image Api
-4) Delete Restaurant Api
-5) Restaurant List Api
-6) Create Restaurant Offer Api
-7) Update Restaurant Offer Api
-8) Delete Restaurant Offer Api
-9) Active Inactive Restaurant Offer Api
-10) Restaurant Offer List Api
-11) Crate About Detail Api
-12) Update About Detail Api
-13) Delete About Detail Api
-14) About Detail List Api
+- [Youtube Video - 1: Node Express Api Base Setup With MySQL Connection POST Method Api ](https://youtu.be/kmcd231SVIo)
+- [Youtube Video - 2: Socket Connection & Socket Emit & Event On Listen Api With Flutter Mobile App ](https://youtu.be/FWKYqs-eaAE)
+- [Youtube Video - 3: Node Express Create Multipart/Form-Data Api With Multiple Image Upload Api ](https://youtu.be/ec2_v1zXbiQ)
 
-<b> App Api: </b>
-
-15) Update User Profile Api
-16) Update User Profile Image Api
-
-- [Youtube Video - 4: Food Delivery Create Admin Category, Menu, Menu Item Api) ](https://youtu.be/KgcNZAifq_8)
-
-<b> Admin Api: </b>
-
-18) Add Category Detail Api
-19) Update Category Detail Api
-20) Delete Category Detail Api
-21) Category List Api
-22) Add Menu Detail Api
-23) Update Menu Detail Api
-24) Delete Menu Detail Api
-25) Menu List Api
-26) Add Menu Items Detail Api
-27) Update Menu Items Detail Api
-28) Delete Menu Items Detail Api
-29) Menu Items List Api
-30) Add Menu Items Portion Api
-31) Update Menu Items Portion Api
-32) Delete Menu Items Portion Api
-33) Menu Items Portion List Api
-34) Add Menu Items Ingredient Api
-35) Update Menu Items Ingredient Api
-36) Delete Menu Items Ingredient Api
-37) Menu Items Ingredient List Api
 
 A new node express project.
 ## Getting Started
 
-[Node Express Base Setup Download](https://github.com/codeforany/node_express_api_base_setup_with-mysql-socket-io-connection)
+[Node.js Download](https://nodejs.org/en) & [Node.js installing](https://nodejs.org/en/docs/guides/getting-started-guide)
 
+[Express Installing & generator](https://expressjs.com/en/starter/generator.html):
+sudo npm install -g express-generator
+
+# Node App Create:
+
+1) express --view=ejs (app_name)
+2) sudo npm audit fix --force
+
+## Install dependencies:
+1) npm i -s config
+2) npm i -s cors
+3) npm i -s moment-timezone
+4) npm i -s multiparty
+5) npm i -s socket.io
+6) npm i -s uuid
 
 ## Node app run:
 node app.js

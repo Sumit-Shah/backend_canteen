@@ -44,16 +44,8 @@ app.use(cors(corsOptions));
 // import express inside dynamic added.
 fs.readdirSync('./controllers').forEach((file) => {
   if (file.substr(-3) == ".js") {
-    try {
-      const route = require('./controllers/' + file);
-      if (typeof route.controller === 'function') {
-        route.controller(app, io, user_socket_connect_list);
-      } else {
-        console.warn(`Warning: Controller ${file} does not export a controller function`);
-      }
-    } catch (error) {
-      console.error(`Error loading controller ${file}:`, error);
-    }
+    route = require('./controllers/' + file);
+    route.controller(app, io, user_socket_connect_list);
   }
 })
 
@@ -90,8 +82,8 @@ Array.prototype.insert = (index, item) => {
   this.splice(index, 0, item);
 }
 
-Array.prototype.replace_null = function (replace = '""') {
-  return JSON.parse(JSON.stringify(this).replace(/null/g, replace));
+Array.prototype.replace_null = (replace = '""') => {
+  return JSON.parse(JSON.stringify(this).replace(/mull/g, replace));
 }
 
 String.prototype.replaceAll = (search, replacement) => {
