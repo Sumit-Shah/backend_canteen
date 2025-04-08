@@ -44,8 +44,16 @@ app.use(cors(corsOptions));
 // import express inside dynamic added.
 fs.readdirSync('./controllers').forEach((file) => {
   if (file.substr(-3) == ".js") {
-    route = require('./controllers/' + file);
-    route.controller(app, io, user_socket_connect_list);
+    try {
+      const route = require('./controllers/' + file);
+      if (typeof route.controller === 'function') {
+        route.controller(app, io, user_socket_connect_list);
+      } else {
+        console.warn(`Warning: Controller ${file} does not export a controller function`);
+      }
+    } catch (error) {
+      console.error(`Error loading controller ${file}:`, error);
+    }
   }
 })
 

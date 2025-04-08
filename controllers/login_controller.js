@@ -15,43 +15,36 @@ module.exports.controller = (app, io, socket_list) => {
     const msg_exits_user = "user not exits";
     const msg_update_password = "user password updated successfully";
 
-    app.post('/api/login', async (req, res) => {
-        try {
-            helper.Dlog(req.body);
-            const reqObj = req.body;
-    
-            const isValid = await helper.CheckParameterValidPromise(reqObj, ["email", "password", "push_token"]);
-            if (!isValid) {
-                return res.json({ status: "0", message: "Missing parameters" });
-            }
-    
-            console.log("Checking credentials for:", reqObj.email);
-    
-            const { status, result } = await getUserWithPasswordDataPromise(reqObj.email, reqObj.password);
-            console.log("Login check result:", status, result);
-    
-            if (!status) {
-                return res.json({ status: "0", message: result });
-            }
-    
-            const auth_token = helper.createRequestToken();
-    
-            const updateResult = await dbQuery('UPDATE `user_detail` SET `auth_token` = ?, `push_token` = ? WHERE `user_id` = ? AND `status` = ?', [
-                auth_token, reqObj.push_token, result.user_id, "1"
-            ]);
-    
-            if (updateResult.affectedRows > 0) {
-                result.auth_token = auth_token;
-                res.json({ status: "1", payload: result, message: msg_success });
-            } else {
-                res.json({ status: "0", message: msg_invalidUserPassword });
-            }
-        } catch (err) {
-            console.log("Error:", err);
-            helper.ThrowHtmlError(err, res);
-        }
-    });
-    
+    app.post('/api/login', (req, res) => {
+        helper.Dlog(req.body);
+        var reqObj = req.body;
+
+        helper.CheckParameterValid(res, reqObj, ["email", "password", "push_token"], () => {
+
+            getUserWithPasswordData(reqObj.email, reqObj.password, (status, result) => {
+                if (status) {
+                    var auth_token = helper.createRequestToken();
+                    db.query('UPDATE `user_detail` SET `auth_token`= ?,`push_token`=? WHERE `user_id` = ?  AND `status` = ? ', [
+                        auth_token, reqObj.push_token, result.user_id, "1"], (err, uResult) => {
+                            if (err) {
+                                helper.ThrowHtmlError(err, res);
+                                return
+                            }
+
+                            if (uResult.affectedRows > 0) {
+                                result.auth_token = auth_token;
+                                res.json({ "status": "1", "payload": result, "message": msg_success })
+                            } else {
+                                res.json({ "status": "0", "message": msg_invalidUserPassword })
+                            }
+                        })
+                } else {
+                    res.json({ "status": "0", "message": result })
+                }
+            })
+
+        })
+    })
 
     app.post('/api/sign_up', (req, res) => {
         helper.Dlog(req.body);
@@ -287,16 +280,11 @@ function getUserData(user_id, callback) {
 }
 
 function getUserWithPasswordData(email, password, callback) {
-    console.log("Querying database for:", email, password);
-    
     db.query('SELECT `user_id`, `name`, `email`, `password`, `mobile`, `address`, `image`, `device_type`, `auth_token`, `user_type`  FROM `user_detail` WHERE `email` = ? AND `password` = ? AND `status` = ?', [email, password, '1'], (err, result) => {
         if (err) {
-            console.log("Database error:", err);
             helper.ThrowHtmlError(err);
             return callback(false, msg_fail)
         }
-
-        console.log("Query result:", result);
 
         if (result.length > 0) {
             return callback(true, result[0])
