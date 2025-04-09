@@ -1,0 +1,1 @@
+Error: ENOENT: no such file or directory, rename '/tmp/sW1pZopQeNuE9ZFblCcIGnnE.png' -> './public/img/offer/2025040920274427441awDhpuF4w.png'

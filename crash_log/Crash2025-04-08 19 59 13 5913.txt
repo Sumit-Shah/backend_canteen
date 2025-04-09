@@ -1,0 +1,11 @@
+ReferenceError: getUserData is not defined
+    at /home/shah/Documents/backend_canteen/controllers/login_controller.js:62:29
+    at Query.<anonymous> (/home/shah/Documents/backend_canteen/helpers/db_helpers.js:67:24)
+    at Query.<anonymous> (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/Connection.js:488:16)
+    at Sequence.end (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/sequences/Query.js:149:8)
+    at Query.OkPacket (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/sequences/Query.js:74:10)
+    at Protocol._parsePacket (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/Parser.js:43:10)
