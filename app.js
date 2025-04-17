@@ -36,7 +36,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 const corsOptions = {
-  origin: "http://localhost:4200",
+  // origin: "http://localhost:4200",
+  orign:"*"
 }
 
 app.use(cors(corsOptions));

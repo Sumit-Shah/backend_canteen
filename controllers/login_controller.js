@@ -33,6 +33,7 @@ module.exports.controller = (app, io, socket_list) => {
 
                             if (uResult.affectedRows > 0) {
                                 result.auth_token = auth_token;
+                                console.log(result,"result")
                                 res.json({ "status": "1", "payload": result, "message": msg_success })
                             } else {
                                 res.json({ "status": "0", "message": msg_invalidUserPassword })
@@ -183,87 +184,87 @@ module.exports.controller = (app, io, socket_list) => {
         })
     })
 
-    // app.post('/api/update_profile', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
+    app.post('/api/update_profile', (req, res) => {
+        helper.Dlog(req.body);
+        var reqObj = req.body;
 
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         helper.CheckParameterValid(res, reqObj, ["name", "mobile",  "address",], () => {
+        checkAccessToken(req.headers, res, (userObj) => {
+            helper.CheckParameterValid(res, reqObj, ["name", "mobile",  "address",], () => {
 
-    //             db.query('UPDATE `user_detail` SET `name`=?,`mobile`=?,`address`=?,`update_date`=NOW() WHERE `user_id` = ? AND `status` = ? ', [
-    //                 reqObj.name, reqObj.mobile,  reqObj.address, userObj.user_id, "1"], (err, uResult) => {
-    //                     if (err) {
-    //                         helper.ThrowHtmlError(err, res);
-    //                         return
-    //                     }
+                db.query('UPDATE `user_detail` SET `name`=?,`mobile`=?,`address`=?,`update_date`=NOW() WHERE `user_id` = ? AND `status` = ? ', [
+                    reqObj.name, reqObj.mobile,  reqObj.address, userObj.user_id, "1"], (err, uResult) => {
+                        if (err) {
+                            helper.ThrowHtmlError(err, res);
+                            return
+                        }
 
-    //                     if (uResult.affectedRows > 0) {
-    //                         getUserData(userObj.user_id, (userObj) => {
-    //                             res.json({ "status": "1", "payload": userObj, "message": msg_success })
-    //                         })
-    //                     } else {
-    //                         res.json({ "status": "0", "message": msg_fail })
-    //                     }
-    //                 })
-    //         })
+                        if (uResult.affectedRows > 0) {
+                            getUserData(userObj.user_id, (userObj) => {
+                                res.json({ "status": "1", "payload": userObj, "message": msg_success })
+                            })
+                        } else {
+                            res.json({ "status": "0", "message": msg_fail })
+                        }
+                    })
+            })
 
-    //     })
-    // })
+        })
+    })
 
-    // app.post('/api/update_image', (req, res) => {
+    app.post('/api/update_image', (req, res) => {
 
-    //     var form = new multiparty.Form();
+        var form = new multiparty.Form();
 
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         form.parse(req, (err, reqObj, files) => {
-    //             if (err) {
-    //                 helper.ThrowHtmlError(err, res);
-    //                 return;
-    //             }
+        checkAccessToken(req.headers, res, (userObj) => {
+            form.parse(req, (err, reqObj, files) => {
+                if (err) {
+                    helper.ThrowHtmlError(err, res);
+                    return;
+                }
 
-    //             helper.Dlog("--------------- Parameter --------------")
-    //             helper.Dlog(reqObj);
-    //             helper.Dlog("--------------- Files --------------")
-    //             helper.Dlog(files);
+                helper.Dlog("--------------- Parameter --------------")
+                helper.Dlog(reqObj);
+                helper.Dlog("--------------- Files --------------")
+                helper.Dlog(files);
 
-    //             helper.CheckParameterValid(res, files, ["image"], () => {
+                helper.CheckParameterValid(res, files, ["image"], () => {
 
-    //                 var extension = files.image[0].originalFilename.substring(files.image[0].originalFilename.lastIndexOf(".") + 1);
-    //                 var imageFileName = "user/" + helper.fileNameGenerate(extension);
+                    var extension = files.image[0].originalFilename.substring(files.image[0].originalFilename.lastIndexOf(".") + 1);
+                    var imageFileName = "user/" + helper.fileNameGenerate(extension);
 
-    //                 var newPath = imageSavePath + imageFileName;
+                    var newPath = imageSavePath + imageFileName;
 
-    //                 fs.rename(files.image[0].path, newPath, (err) => {
+                    fs.rename(files.image[0].path, newPath, (err) => {
 
-    //                     if (err) {
-    //                         helper.ThrowHtmlError(err, res);
-    //                         return;
-    //                     } else {
-    //                         db.query("UPDATE `user_detail` SET `image` = ?, `update_date` = NOW() WHERE `user_id` = ? AND `status` = ? ", [
-    //                             imageFileName, userObj.user_id, "1"
-    //                         ], (err, result) => {
+                        if (err) {
+                            helper.ThrowHtmlError(err, res);
+                            return;
+                        } else {
+                            db.query("UPDATE `user_detail` SET `image` = ?, `update_date` = NOW() WHERE `user_id` = ? AND `status` = ? ", [
+                                imageFileName, userObj.user_id, "1"
+                            ], (err, result) => {
 
-    //                             if (err) {
-    //                                 helper.ThrowHtmlError(err, res);
-    //                                 return;
-    //                             }
+                                if (err) {
+                                    helper.ThrowHtmlError(err, res);
+                                    return;
+                                }
 
-    //                             if (result) {
-    //                                 getUserData(userObj.user_id, (userObj) => {
-    //                                     res.json({ "status": "1", "payload": userObj, "message": msg_success })
-    //                                 })
-    //                             } else {
-    //                                 res.json({ "status": "0", "message": msg_fail })
-    //                             }
-    //                         })
-    //                     }
-    //                 })
+                                if (result) {
+                                    getUserData(userObj.user_id, (userObj) => {
+                                        res.json({ "status": "1", "payload": userObj, "message": msg_success })
+                                    })
+                                } else {
+                                    res.json({ "status": "0", "message": msg_fail })
+                                }
+                            })
+                        }
+                    })
 
-    //             })
-    //         })
-    //     })
+                })
+            })
+        })
 
-    // })
+    })
 }
 
 function getUserData(user_id, callback) {
