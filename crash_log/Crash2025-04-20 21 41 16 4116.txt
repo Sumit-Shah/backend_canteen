@@ -1,0 +1,3 @@
+TypeError: Cannot read properties of undefined (reading '0')
+    at /home/shah/Documents/backend_canteen/controllers/admin_controller.js:733:159
+    at FSReqCallback.oncomplete (node:fs:188:23)

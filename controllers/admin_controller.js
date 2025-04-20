@@ -688,19 +688,19 @@ module.exports.controller = (app, io, socket_list) => {
         helper.Dlog(req.body);
         var reqObj = req.body;
 
-            if (!reqObj.category_id) {
-                res.json({ "status": "0", "message": "Missing parameter (category_id)" });
-                return;
-            }
+        if (!reqObj.category_id) {
+            res.json({ "status": "0", "message": "Missing parameter (category_id)" });
+            return;
+        }
 
-            db.query('SELECT `menu_item_id`, `category_id`, `name`, `description`, `image`, `base_price`, `is_portion_allow`, `is_custom_ingredient_allow`, `create_date`, `update_date` FROM `menu_item_detail` WHERE `category_id` = ? AND `status` != ?', [
-                reqObj.category_id, "2"], (err, result) => {
-                    if (err) {
-                        helper.ThrowHtmlError(err, res);
-                        return
-                    }
-                    res.json({ "status": "1", "payload": result, "message": msg_success })
-                })
+        db.query('SELECT `menu_item_id`, `category_id`, `name`, `description`, `image`, `base_price`, `is_portion_allow`, `is_custom_ingredient_allow`, `create_date`, `update_date` FROM `menu_item_detail` WHERE `category_id` = ? AND `status` != ?', [
+            reqObj.category_id, "2"], (err, result) => {
+                if (err) {
+                    helper.ThrowHtmlError(err, res);
+                    return
+                }
+                res.json({ "status": "1", "payload": result, "message": msg_success })
+            })
     })
 
     app.post('/api/admin/menu_item_add', (req, res) => {
@@ -726,11 +726,12 @@ module.exports.controller = (app, io, socket_list) => {
 
                         fs.rename(files.image[0].path, newPath, (err) => {
                             if (err) {
+                                console.log("if error")
                                 helper.ThrowHtmlError(err, res);
                                 return;
                             } else {
                                 db.query("INSERT INTO `menu_item_detail`(`category_id`, `name`, `description`, `image`, `base_price`, `is_portion_allow`, `is_custom_ingredient_allow`, `create_date`, `update_date`) VALUES (?,?,?,?,?,?,?,NOW(), NOW())", [
-                                    reqObj.category_id[0], reqObj.name[0], reqObj.description[0], imageFileName, reqObj.base_price[0], reqObj.is_portion_allow[0] || "0", reqObj.is_custom_ingredient_allow[0] || "0"
+                                    reqObj.category_id[0], reqObj.name[0], reqObj.description[0], imageFileName, reqObj.base_price[0], (reqObj.is_portion_allow && reqObj.is_portion_allow[0]) || "0", (reqObj.is_custom_ingredient_allow && reqObj.is_custom_ingredient_allow[0]) || "0"
                                 ], (err, result) => {
                                     if (err) {
                                         helper.ThrowHtmlError(err, res);

@@ -1,0 +1,1 @@
+Error: ENOENT: no such file or directory, rename '/tmp/rHKsXB21nRFHX1uD9ep4avwP.webp' -> './public/img/menu_item/202504201514141414uFk0MT66zh.webp'

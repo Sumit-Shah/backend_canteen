@@ -1,0 +1,10 @@
+Error: connect ECONNREFUSED 127.0.0.1:3307
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1634:16)
+    --------------------
+    at Protocol._enqueue (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/Protocol.js:144:48)
+    at Protocol.handshake (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/Protocol.js:51:23)
+    at Connection.connect (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/Connection.js:116:18)
+    at reconnect (/home/shah/Documents/backend_canteen/helpers/db_helpers.js:18:16)
+    at Timeout._onTimeout (/home/shah/Documents/backend_canteen/helpers/db_helpers.js:25:17)
+    at listOnTimeout (node:internal/timers:594:17)
+    at process.processTimers (node:internal/timers:529:7)

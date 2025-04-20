@@ -1,0 +1,1 @@
+Error: ENOENT: no such file or directory, rename '/tmp/m0AHKjRQVR5Nm4AUFlOQjmBG.jpg' -> './public/img/menu_item/202504201450385038m62B5ewt6i.jpg'
