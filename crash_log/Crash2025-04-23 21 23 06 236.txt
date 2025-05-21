@@ -1,0 +1,14 @@
+Error: Cannot find module 'multer'
+Require stack:
+- /home/shah/Documents/backend_canteen/controllers/admin_controller.js
+- /home/shah/Documents/backend_canteen/app.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1225:15)
+    at Function._load (node:internal/modules/cjs/loader:1055:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Module.require (node:internal/modules/cjs/loader:1311:12)
+    at require (node:internal/modules/helpers:136:16)
+    at module.exports.controller (/home/shah/Documents/backend_canteen/controllers/admin_controller.js:594:22)
+    at /home/shah/Documents/backend_canteen/app.js:49:11
+    at Array.forEach (<anonymous>)
+    at Object.<anonymous> (/home/shah/Documents/backend_canteen/app.js:46:33)

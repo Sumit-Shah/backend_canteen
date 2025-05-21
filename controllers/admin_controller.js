@@ -4,6 +4,7 @@ var multiparty = require("multiparty");
 var fs = require('fs');
 var imageSavePath = "./public/img/"
 
+// const multer = require('multer');
 const msg_success = "successfully";
 const msg_fail = "fail";
 const msg_invalidUserPassword = "invalid username and password";
@@ -14,14 +15,6 @@ module.exports.controller = (app, io, socket_list) => {
     const msg_exits_user = "user not exits";
     const msg_update_password = "user password updated successfully";
 
-    // const msg_add_restaurant = "Restaurant added Successfully.";
-    // const msg_update_restaurant = "Restaurant updated Successfully.";
-    // const msg_delete_restaurant = "Restaurant deleted Successfully.";
-
-    // const msg_add_restaurant_offer = "Restaurant offer added Successfully.";
-    // const msg_update_restaurant_offer = "Restaurant offer updated Successfully.";
-    // const msg_delete_restaurant_offer = "Restaurant offer deleted Successfully.";
-
     const msg_add = "Added Successfully.";
     const msg_update = "Updated Successfully.";
     const msg_delete = "Deleted Successfully.";
@@ -30,484 +23,15 @@ module.exports.controller = (app, io, socket_list) => {
     const msg_update_category = "Category updated Successfully.";
     const msg_delete_category = "Category deleted Successfully.";
 
-    // const msg_add_menu = "Menu added Successfully.";
-    // const msg_update_menu = "Menu updated Successfully.";
-    // const msg_delete_menu = "Menu deleted Successfully.";
-
     const msg_add_menu_item = "Menu Item added Successfully.";
     const msg_update_menu_item = "Menu Item updated Successfully.";
     const msg_delete_menu_item = "Menu Item deleted Successfully.";
-
-    // const msg_add_portion = "Menu portion added Successfully.";
-    // const msg_update_portion = "Menu portion updated Successfully.";
-    // const msg_delete_portion = "Menu portion deleted Successfully.";
 
     const msg_add_ingredient = "Menu ingredient added Successfully.";
     const msg_update_ingredient = "Menu ingredient updated Successfully.";
     const msg_delete_ingredient = "Menu ingredient deleted Successfully.";
 
-
-    // app.post('/api/admin/restaurant_add', (req, res) => {
-
-    //     var form = new multiparty.Form();
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         form.parse(req, (err, reqObj, files) => {
-    //             if (err) {
-    //                 helper.ThrowHtmlError(err, res);
-    //                 return;
-    //             }
-
-    //             helper.Dlog("--------------- Parameter --------------")
-    //             helper.Dlog(reqObj);
-    //             helper.Dlog("--------------- Files --------------")
-    //             helper.Dlog(files);
-
-    //             helper.CheckParameterValid(res, reqObj, ["name", "shop_type", "food_type", "address", "city", "state", "latitude", "longitude", "delivery_cost"], () => {
-
-    //                 helper.CheckParameterValid(res, files, ["image"], () => {
-
-    //                     var extension = files.image[0].originalFilename.substring(files.image[0].originalFilename.lastIndexOf(".") + 1);
-    //                     var imageFileName = "restaurant/" + helper.fileNameGenerate(extension);
-
-    //                     var newPath = imageSavePath + imageFileName;
-
-    //                     fs.rename(files.image[0].path, newPath, (err) => {
-
-    //                         if (err) {
-    //                             helper.ThrowHtmlError(err, res);
-    //                             return;
-    //                         } else {
-    //                             db.query("INSERT INTO `restaurant_detail`( `name`, `image`, `shop_type`, `food_type`, `address`, `city`, `state`, `latitude`, `longitude`, `delivery_cost`, `create_date`, `update_date`) VALUES (?,?,?, ?,?,?, ?,?,?, ?,NOW(), NOW())", [
-    //                                 reqObj.name[0], imageFileName, reqObj.shop_type[0], reqObj.food_type[0], reqObj.address[0], reqObj.city[0], reqObj.state[0], reqObj.latitude[0], reqObj.longitude[0], reqObj.delivery_cost[0]
-    //                             ], (err, result) => {
-
-    //                                 if (err) {
-    //                                     helper.ThrowHtmlError(err, res);
-    //                                     return;
-    //                                 }
-
-    //                                 if (result) {
-    //                                     res.json({ "status": "1", "message": msg_add_restaurant })
-    //                                 } else {
-    //                                     res.json({ "status": "0", "message": msg_fail })
-    //                                 }
-    //                             })
-    //                         }
-    //                     })
-
-    //                 })
-    //             })
-
-
-    //         })
-    //     }, "3")
-
-    // })
-
-    // app.post('/api/admin/restaurant_update', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         helper.CheckParameterValid(res, reqObj, ["restaurant_id", "name", "shop_type", "food_type", "address", "city", "state", "latitude", "longitude", "delivery_cost"], () => {
-
-    //             db.query('UPDATE `restaurant_detail` SET `name`=?,`shop_type`=?,`food_type`=?,`address`=?,`city`=?,`state`=?,`latitude`=?,`longitude`=?,`delivery_cost`=?,`update_date`=NOW() WHERE `restaurant_id` = ? AND `status` = ? ', [
-    //                 reqObj.name, reqObj.shop_type, reqObj.food_type, reqObj.address, reqObj.city, reqObj.state, reqObj.latitude, reqObj.longitude, reqObj.delivery_cost, reqObj.restaurant_id, "1"], (err, uResult) => {
-    //                     if (err) {
-    //                         helper.ThrowHtmlError(err, res);
-    //                         return
-    //                     }
-
-    //                     if (uResult.affectedRows > 0) {
-    //                         res.json({ "status": "1", "message": msg_update_restaurant })
-    //                     } else {
-    //                         res.json({ "status": "0", "message": msg_fail })
-    //                     }
-    //                 })
-    //         })
-
-    //     }, "3")
-    // })
-
-    // app.post('/api/admin/restaurant_update_image', (req, res) => {
-
-    //     var form = new multiparty.Form();
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         form.parse(req, (err, reqObj, files) => {
-    //             if (err) {
-    //                 helper.ThrowHtmlError(err, res);
-    //                 return;
-    //             }
-
-    //             helper.Dlog("--------------- Parameter --------------")
-    //             helper.Dlog(reqObj);
-    //             helper.Dlog("--------------- Files --------------")
-    //             helper.Dlog(files);
-
-    //             helper.CheckParameterValid(res, reqObj, ["restaurant_id"], () => {
-
-    //                 helper.CheckParameterValid(res, files, ["image"], () => {
-
-    //                     var extension = files.image[0].originalFilename.substring(files.image[0].originalFilename.lastIndexOf(".") + 1);
-    //                     var imageFileName = "restaurant/" + helper.fileNameGenerate(extension);
-
-    //                     var newPath = imageSavePath + imageFileName;
-
-    //                     fs.rename(files.image[0].path, newPath, (err) => {
-
-    //                         if (err) {
-    //                             helper.ThrowHtmlError(err, res);
-    //                             return;
-    //                         } else {
-    //                             db.query("UPDATE `restaurant_detail` SET `image` = ?, `update_date` = NOW() WHERE `restaurant_id` = ? AND `status` = ? ", [
-    //                                 imageFileName, reqObj.restaurant_id[0], "1"
-    //                             ], (err, result) => {
-
-    //                                 if (err) {
-    //                                     helper.ThrowHtmlError(err, res);
-    //                                     return;
-    //                                 }
-
-    //                                 if (result) {
-    //                                     res.json({ "status": "1", "message": msg_success })
-    //                                 } else {
-    //                                     res.json({ "status": "0", "message": msg_fail })
-    //                                 }
-    //                             })
-    //                         }
-    //                     })
-
-    //                 })
-    //             })
-
-
-    //         })
-    //     }, "3")
-
-    // })
-
-    // app.post('/api/admin/restaurant_delete', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         helper.CheckParameterValid(res, reqObj, ["restaurant_id"], () => {
-    //             db.query(
-    //                 'DELETE FROM `restaurant_detail` WHERE `restaurant_id` = ? AND `status` = ?',
-    //                 [reqObj.restaurant_id, "1"],
-    //                 (err, uResult) => {
-    //                     if (err) {
-    //                         helper.ThrowHtmlError(err, res);
-    //                         return;
-    //                     }
-
-    //                     if (uResult.affectedRows > 0) {
-    //                         res.json({ "status": "1", "message": msg_delete_restaurant });
-    //                     } else {
-    //                         res.json({ "status": "0", "message": msg_fail });
-    //                     }
-    //                 }
-    //             );
-    //         });
-    //     }, "3");
-    // });
-
-
-    // app.post('/api/admin/restaurant_list', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-
-    //         db.query('SELECT `restaurant_id`, `name`, `image`, `shop_type`, `food_type`, `address`, `city`, `state`, `latitude`, `longitude`, `delivery_cost`, `create_date`, `update_date`, `status` FROM `restaurant_detail` WHERE `status` = ? ', [
-    //             "1"], (err, result) => {
-    //                 if (err) {
-    //                     helper.ThrowHtmlError(err, res);
-    //                     return
-    //                 }
-
-    //                 res.json({ "status": "1", "payload": result.replace_null(), "message": msg_success })
-    //             })
-    //     }, "3")
-    // })
-
-    // app.post('/api/admin/restaurant_offer_add', (req, res) => {
-
-    //     var form = new multiparty.Form();
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         form.parse(req, (err, reqObj, files) => {
-    //             if (err) {
-    //                 helper.ThrowHtmlError(err, res);
-    //                 return;
-    //             }
-
-    //             helper.Dlog("--------------- Parameter --------------")
-    //             helper.Dlog(reqObj);
-    //             helper.Dlog("--------------- Files --------------")
-    //             helper.Dlog(files);
-
-    //             helper.CheckParameterValid(res, reqObj, ["name", "restaurant_id", "start_date", "end_date"], () => {
-
-    //                 helper.CheckParameterValid(res, files, ["image"], () => {
-
-    //                     var extension = files.image[0].originalFilename.substring(files.image[0].originalFilename.lastIndexOf(".") + 1);
-    //                     var imageFileName = "offer/" + helper.fileNameGenerate(extension);
-
-    //                     var newPath = imageSavePath + imageFileName;
-
-    //                     fs.rename(files.image[0].path, newPath, (err) => {
-
-    //                         if (err) {
-    //                             helper.ThrowHtmlError(err, res);
-    //                             return;
-    //                         } else {
-    //                             db.query("INSERT INTO `offer_detail`( `name`, `image`, `restaurant_id`, `start_date`, `end_date`, `create_date`, `update_date`) VALUES (?,?,?, ?,?,NOW(), NOW())", [
-    //                                 reqObj.name[0], imageFileName, reqObj.restaurant_id[0], reqObj.start_date[0], reqObj.end_date[0]
-    //                             ], (err, result) => {
-
-    //                                 if (err) {
-    //                                     helper.ThrowHtmlError(err, res);
-    //                                     return;
-    //                                 }
-
-    //                                 if (result) {
-    //                                     res.json({ "status": "1", "message": msg_add_restaurant_offer })
-    //                                 } else {
-    //                                     res.json({ "status": "0", "message": msg_fail })
-    //                                 }
-    //                             })
-    //                         }
-    //                     })
-
-    //                 })
-    //             })
-
-
-    //         })
-    //     }, "3")
-
-    // })
-
-    // app.post('/api/admin/restaurant_offer_update', (req, res) => {
-
-    //     var form = new multiparty.Form();
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         form.parse(req, (err, reqObj, files) => {
-    //             if (err) {
-    //                 helper.ThrowHtmlError(err, res);
-    //                 return;
-    //             }
-
-    //             helper.Dlog("--------------- Parameter --------------")
-    //             helper.Dlog(reqObj);
-    //             helper.Dlog("--------------- Files --------------")
-    //             helper.Dlog(files);
-
-    //             helper.CheckParameterValid(res, reqObj, ["offer_id", "name", "restaurant_id", "start_date", "end_date"], () => {
-
-
-    //                 var condition = ""
-    //                 var imageFileName = ""
-    //                 if (files.image != undefined || files.image != null) {
-    //                     var extension = files.image[0].originalFilename.substring(files.image[0].originalFilename.lastIndexOf(".") + 1);
-    //                     imageFileName = "offer/" + helper.fileNameGenerate(extension);
-    //                     newPath = imageSavePath + imageFileName;
-    //                     condition = " `image` = '" + imageFileName + "',"
-    //                     fs.rename(files.image[0].path, newPath, (err) => {
-    //                         if (err) {
-    //                             helper.ThrowHtmlError(err);
-    //                             return;
-    //                         }
-    //                     })
-    //                 }
-
-    //                 db.query("UPDATE `offer_detail` SET `name` = ?, " + condition + "  `start_date` = ?, `end_date` = ?,  `update_date` = NOW() WHERE `restaurant_id` = ? AND `status` < ? AND `offer_id` = ? ", [
-    //                     reqObj.name[0], reqObj.start_date[0], reqObj.end_date[0], reqObj.restaurant_id[0], "2", reqObj.offer_id[0]
-    //                 ], (err, result) => {
-
-    //                     if (err) {
-    //                         helper.ThrowHtmlError(err, res);
-    //                         return;
-    //                     }
-
-    //                     if (result) {
-    //                         res.json({ "status": "1", "message": msg_update_restaurant_offer })
-    //                     } else {
-    //                         res.json({ "status": "0", "message": msg_fail })
-    //                     }
-    //                 })
-
-    //             })
-
-
-
-    //         })
-    //     }, "3")
-
-    // })
-
-    // app.post('/api/admin/restaurant_offer_delete', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         helper.CheckParameterValid(res, reqObj, ["offer_id"], () => {
-
-
-    //             db.query('UPDATE `offer_detail` SET `status`=?,`update_date`=NOW() WHERE `offer_id` = ? AND `status` != ? ', [
-    //                 "2", reqObj.offer_id, "2"], (err, uResult) => {
-    //                     if (err) {
-    //                         helper.ThrowHtmlError(err, res);
-    //                         return
-    //                     }
-
-    //                     if (uResult.affectedRows > 0) {
-    //                         res.json({ "status": "1", "message": msg_delete_restaurant_offer })
-    //                     } else {
-    //                         res.json({ "status": "0", "message": msg_fail })
-    //                     }
-    //                 })
-    //         })
-
-    //     }, "3")
-    // })
-
-    // app.post('/api/admin/restaurant_offer_active_inactive', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         helper.CheckParameterValid(res, reqObj, ["offer_id", "is_active"], () => {
-
-
-    //             db.query('UPDATE `offer_detail` SET `status`=?,`update_date`=NOW() WHERE `offer_id` = ? AND `status` != ? ', [
-    //                 reqObj.is_active, reqObj.offer_id, "2"], (err, uResult) => {
-    //                     if (err) {
-    //                         helper.ThrowHtmlError(err, res);
-    //                         return
-    //                     }
-
-    //                     if (uResult.affectedRows > 0) {
-    //                         res.json({ "status": "1", "message": msg_success })
-    //                     } else {
-    //                         res.json({ "status": "0", "message": msg_fail })
-    //                     }
-    //                 })
-    //         })
-
-    //     }, "3")
-    // })
-
-    // app.post('/api/admin/restaurant_offer_list', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-
-    //         db.query('SELECT `offer_id`, `name`, `restaurant_id`, `image`, `start_date`, `end_date`, `status`, `create_date`, `update_date` FROM `offer_detail` WHERE `status` != ? ', [
-    //             "2"], (err, result) => {
-    //                 if (err) {
-    //                     helper.ThrowHtmlError(err, res);
-    //                     return
-    //                 }
-    //                 res.json({ "status": "1", "payload": result.replace_null(), "message": msg_success })
-    //             })
-    //     }, "3")
-    // })
-
-    // app.post('/api/admin/about_list', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-
-    //         db.query('SELECT `about_id`, `detail` FROM `about_detail` WHERE `status` = ? ORDER BY `display_order` ', [
-    //             "1"], (err, result) => {
-    //                 if (err) {
-    //                     helper.ThrowHtmlError(err, res);
-    //                     return
-    //                 }
-    //                 res.json({ "status": "1", "payload": result.replace_null(), "message": msg_success })
-    //             })
-    //     }, "3")
-    // })
-
-    // app.post('/api/admin/about_add', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         helper.CheckParameterValid(res, reqObj, ["detail", "display_order"], () => {
-    //             db.query('INSERT INTO `about_detail`(`detail`, `display_order`, `created_date`, `update_date`) VALUES (?,?,NOW(), NOW() )', [
-    //                 reqObj.detail, reqObj.display_order], (err, result) => {
-    //                     if (err) {
-    //                         helper.ThrowHtmlError(err, res);
-    //                         return
-    //                     }
-
-    //                     if (result) {
-    //                         res.json({ "status": "1", "message": msg_add })
-    //                     } else {
-    //                         res.json({ "status": "0", "message": msg_fail })
-    //                     }
-
-    //                 })
-    //         })
-    //     }, "3")
-    // })
-
-    // app.post('/api/admin/about_update', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         helper.CheckParameterValid(res, reqObj, ["about_id", "detail", "display_order"], () => {
-    //             db.query('UPDATE `about_detail` SET `detail` = ?, `display_order` = ?,`update_date` = NOW() WHERE `about_id` = ?  AND `status` = ? ', [
-    //                 reqObj.detail, reqObj.display_order, reqObj.about_id, "1"], (err, result) => {
-    //                     if (err) {
-    //                         helper.ThrowHtmlError(err, res);
-    //                         return
-    //                     }
-
-    //                     if (result.affectedRows > 0) {
-    //                         res.json({ "status": "1", "message": msg_update })
-    //                     } else {
-    //                         res.json({ "status": "0", "message": msg_fail })
-    //                     }
-    //                 })
-    //         })
-    //     }, "3")
-    // })
-
-    // app.post('/api/admin/about_delete', (req, res) => {
-    //     helper.Dlog(req.body);
-    //     var reqObj = req.body;
-
-    //     checkAccessToken(req.headers, res, (userObj) => {
-    //         helper.CheckParameterValid(res, reqObj, ["about_id"], () => {
-    //             db.query('UPDATE `about_detail` SET `status` = ?, `update_date` = NOW() WHERE `about_id` = ?  AND `status` = ? ', [
-    //                 "2", reqObj.about_id, "1"], (err, result) => {
-    //                     if (err) {
-    //                         helper.ThrowHtmlError(err, res);
-    //                         return
-    //                     }
-
-    //                     if (result.affectedRows > 0) {
-    //                         res.json({ "status": "1", "message": msg_delete })
-    //                     } else {
-    //                         res.json({ "status": "0", "message": msg_fail })
-    //                     }
-    //                 })
-    //         })
-    //     }, "3")
-    // })
-
     app.post('/api/admin/category_add', (req, res) => {
-
         var form = new multiparty.Form();
 
         checkAccessToken(req.headers, res, (userObj) => {
@@ -523,16 +47,13 @@ module.exports.controller = (app, io, socket_list) => {
                 helper.Dlog(files);
 
                 helper.CheckParameterValid(res, reqObj, ["name"], () => {
-
                     helper.CheckParameterValid(res, files, ["image"], () => {
-
                         var extension = files.image[0].originalFilename.substring(files.image[0].originalFilename.lastIndexOf(".") + 1);
                         var imageFileName = "category/" + helper.fileNameGenerate(extension);
 
                         var newPath = imageSavePath + imageFileName;
 
                         fs.rename(files.image[0].path, newPath, (err) => {
-
                             if (err) {
                                 helper.ThrowHtmlError(err, res);
                                 return;
@@ -540,7 +61,6 @@ module.exports.controller = (app, io, socket_list) => {
                                 db.query("INSERT INTO `category_detail`( `name`, `image`, `create_date`, `update_date`) VALUES (?,?, NOW(), NOW())", [
                                     reqObj.name[0], imageFileName
                                 ], (err, result) => {
-
                                     if (err) {
                                         helper.ThrowHtmlError(err, res);
                                         return;
@@ -554,18 +74,13 @@ module.exports.controller = (app, io, socket_list) => {
                                 })
                             }
                         })
-
                     })
                 })
-
-
             })
         }, "3")
-
     })
 
     app.post('/api/admin/category_update', (req, res) => {
-
         var form = new multiparty.Form();
 
         checkAccessToken(req.headers, res, (userObj) => {
@@ -581,8 +96,6 @@ module.exports.controller = (app, io, socket_list) => {
                 helper.Dlog(files);
 
                 helper.CheckParameterValid(res, reqObj, ["category_id", "name"], () => {
-
-
                     var condition = ""
                     var imageFileName = ""
                     if (files.image != undefined || files.image != null) {
@@ -601,7 +114,6 @@ module.exports.controller = (app, io, socket_list) => {
                     db.query("UPDATE `category_detail` SET `name` = ?, " + condition + " `update_date` = NOW() WHERE `status` < ? AND `category_id` = ? ", [
                         reqObj.name[0], "2", reqObj.category_id[0]
                     ], (err, result) => {
-
                         if (err) {
                             helper.ThrowHtmlError(err, res);
                             return;
@@ -613,14 +125,9 @@ module.exports.controller = (app, io, socket_list) => {
                             res.json({ "status": "0", "message": msg_fail })
                         }
                     })
-
                 })
-
-
-
             })
         }, "3")
-
     })
 
     app.post('/api/admin/category_delete', (req, res) => {
@@ -629,8 +136,6 @@ module.exports.controller = (app, io, socket_list) => {
 
         checkAccessToken(req.headers, res, (userObj) => {
             helper.CheckParameterValid(res, reqObj, ["category_id"], () => {
-
-                //TODO- delete
                 db.query('UPDATE `category_detail` SET `status`=?,`update_date`=NOW() WHERE `category_id` = ? AND `status` != ? ', [
                     "2", reqObj.category_id, "2"], (err, uResult) => {
                         if (err) {
@@ -645,7 +150,6 @@ module.exports.controller = (app, io, socket_list) => {
                         }
                     })
             })
-
         }, "3")
     })
 
@@ -671,7 +175,6 @@ module.exports.controller = (app, io, socket_list) => {
         var reqObj = req.body;
 
         checkAccessToken(req.headers, res, (userObj) => {
-
             db.query('SELECT `category_id`, `name`, `image`, `create_date`, `update_date` FROM `category_detail` WHERE `status` != ? ', [
                 "2"], (err, result) => {
                     if (err) {
@@ -821,49 +324,534 @@ module.exports.controller = (app, io, socket_list) => {
                             res.json({ "status": "0", "message": msg_fail })
                         }
                     })
-            })
+                })
         }, "3")
     })
 
-}
+    app.post('/api/user/place-order', (req, res) => {
+        helper.Dlog(req.body);
+        var reqObj = req.body;
 
-function getUserData(user_id, callback) {
-    db.query('SELECT `user_id`, `name`, `email`, `password`, `mobile`, `address`, `image`, `device_type`, `auth_token`, `user_type` FROM `user_detail` WHERE `user_id` = ? AND `status` = ?', [user_id, '1'], (err, result) => {
-        if (err) {
-            helper.ThrowHtmlError(err);
-            return;
-        }
+        checkAccessToken(req.headers, res, (userObj) => {
+            helper.CheckParameterValid(res, reqObj, ["items", "total", "delivery_floor"], () => {
+                if (!Array.isArray(reqObj.items) || reqObj.items.length === 0) {
+                    res.json({ "status": "0", "message": "Invalid items array" });
+                    return;
+                }
 
-        if (result.length > 0) {
-            return callback(result[0])
-        }
-    })
-}
+                // Insert into orders
+                db.query(
+                    'INSERT INTO `orders` (`user_id`, `total`, `delivery_floor`, `delivery_notes`, `created_date`, `status`) VALUES (?, ?, ?, ?, NOW(), ?)',
+                    [userObj.user_id, reqObj.total, reqObj.delivery_floor, reqObj.delivery_notes || '', 'pending'],
+                    (err, orderResult) => {
+                        if (err) {
+                            helper.ThrowHtmlError(err, res);
+                            return;
+                        }
 
-function checkAccessToken(headerObj, res, callback, require_type = "") {
-    helper.Dlog(headerObj.access_token);
-    helper.CheckParameterValid(res, headerObj, ["access_token"], () => {
-        db.query('SELECT `user_id`, `name`, `email`, `password`, `mobile`, `address`, `image`, `device_type`, `auth_token`, `user_type`, `status`  FROM `user_detail` WHERE `auth_token` = ? AND `status` = ?', [headerObj.access_token, "1"], (err, result) => {
+                        const orderId = orderResult.insertId;
+
+                        // Insert order items
+                        let itemsInserted = 0;
+                        reqObj.items.forEach((item) => {
+                            db.query(
+                                'INSERT INTO `order_items` (`order_id`, `name`, `qty`, `price`, `image`) VALUES (?, ?, ?, ?, ?)',
+                                [orderId, item.name, item.qty, item.price, item.image || null],
+                                (err, itemResult) => {
+                                    if (err) {
+                                        helper.ThrowHtmlError(err, res);
+                                        return;
+                                    }
+                                    itemsInserted++;
+                                    if (itemsInserted === reqObj.items.length) {
+                                        // All items inserted, emit Socket.IO event
+                                        io.emit('newOrder', {
+                                            order_id: orderId,
+                                            user_id: userObj.user_id,
+                                            total: parseFloat(reqObj.total),
+                                            delivery_floor: reqObj.delivery_floor,
+                                            delivery_notes: reqObj.delivery_notes || '',
+                                            items: reqObj.items,
+                                            created_date: new Date().toISOString(),
+                                            status: 'pending'
+                                        });
+
+                                        res.json({ "status": "1", "message": "Order placed successfully", "payload": { order_id: orderId } });
+                                    }
+                                }
+                            );
+                        });
+                    }
+                );
+            });
+        }, "1");
+    });
+
+    app.post('/api/admin/order_list', (req, res) => {
+        helper.Dlog(req.body);
+        var reqObj = req.body;
+
+        checkAccessToken(req.headers, res, (userObj) => {
+            db.query('SELECT `order_id`, `user_id`, `total`, `delivery_floor`, `delivery_notes`, `created_date`, `status` FROM `orders` WHERE `status` != ?', [
+                "deleted"], (err, orderResult) => {
+                    if (err) {
+                        helper.ThrowHtmlError(err, res);
+                        return;
+                    }
+
+                    let orders = [];
+                    let completedOrders = 0;
+
+                    orderResult.forEach((order) => {
+                        db.query('SELECT `name`, `qty`, `price`, `image` FROM `order_items` WHERE `order_id` = ?', [
+                            order.order_id], (err, itemsResult) => {
+                                if (err) {
+                                    helper.ThrowHtmlError(err, res);
+                                    return;
+                                }
+
+                                orders.push({
+                                    order_id: order.order_id,
+                                    user_id: order.user_id,
+                                    total: order.total,
+                                    delivery_floor: order.delivery_floor,
+                                    delivery_notes: order.delivery_notes,
+                                    created_date: order.created_date,
+                                    status: order.status,
+                                    items: itemsResult
+                                });
+
+                                if (order.status === "delivered") {
+                                    completedOrders++;
+                                }
+
+                                if (orders.length === orderResult.length) {
+                                    res.json({
+                                        "status": "1",
+                                        "payload": orders,
+                                        "message": msg_success,
+                                        "total_orders": orders.length,
+                                        "completed_orders": completedOrders
+                                    });
+                                }
+                            })
+                    });
+
+                    if (orderResult.length === 0) {
+                        res.json({
+                            "status": "1",
+                            "payload": [],
+                            "message": msg_success,
+                            "total_orders": 0,
+                            "completed_orders": 0
+                        });
+                    }
+                })
+        }, "3")
+    });
+
+    app.post('/api/admin/update_order_status', (req, res) => {
+        helper.Dlog(req.body);
+        var reqObj = req.body;
+
+        checkAccessToken(req.headers, res, (adminObj) => {
+            helper.CheckParameterValid(res, reqObj, ["order_id", "status"], () => {
+                // Validate status value
+                const validStatuses = ["pending", "delivered"];
+                if (!validStatuses.includes(reqObj.status)) {
+                    res.json({ "status": "0", "message": "Invalid status value" });
+                    return;
+                }
+
+                db.query(
+                    'UPDATE `orders` SET `status` = ?, `update_date` = NOW() WHERE `order_id` = ? AND `status` != ?',
+                    [reqObj.status, reqObj.order_id, "deleted"],
+                    (err, result) => {
+                        if (err) {
+                            helper.ThrowHtmlError(err, res);
+                            return;
+                        }
+
+                        if (result.affectedRows > 0) {
+                            // Emit Socket.IO event for real-time updates
+                            io.emit('orderStatusUpdated', {
+                                order_id: reqObj.order_id,
+                                status: reqObj.status,
+                                updated_at: new Date().toISOString()
+                            });
+
+                            res.json({ "status": "1", "message": "Order status updated successfully" });
+                        } else {
+                            res.json({ "status": "0", "message": "Order not found or already deleted" });
+                        }
+                    }
+                );
+            });
+        }, "3");
+    });
+
+    app.post('/api/admin/place-order', (req, res) => {
+        helper.Dlog(req.body);
+        var reqObj = req.body;
+
+        checkAccessToken(req.headers, res, (adminObj) => {
+            helper.CheckParameterValid(res, reqObj, ["user_id", "items", "total", "delivery_floor"], () => {
+                if (!Array.isArray(reqObj.items) || reqObj.items.length === 0) {
+                    res.json({ "status": "0", "message": "Invalid items array" });
+                    return;
+                }
+
+                // Verify the user_id exists and is a valid user (user_type = "1")
+                db.query(
+                    'SELECT user_id FROM `user_detail` WHERE user_id = ? AND user_type = ? AND status = ?',
+                    [reqObj.user_id, "1", "1"],
+                    (err, userResult) => {
+                        if (err) {
+                            helper.ThrowHtmlError(err, res);
+                            return;
+                        }
+
+                        if (userResult.length === 0) {
+                            res.json({ "status": "0", "message": "Invalid user_id" });
+                            return;
+                        }
+
+                        const userId = reqObj.user_id;
+
+                        // Insert into orders
+                        db.query(
+                            'INSERT INTO `orders` (`user_id`, `total`, `delivery_floor`, `delivery_notes`, `created_date`, `status`) VALUES (?, ?, ?, ?, NOW(), ?)',
+                            [userId, reqObj.total, reqObj.delivery_floor, reqObj.delivery_notes || '', 'pending'],
+                            (err, orderResult) => {
+                                if (err) {
+                                    helper.ThrowHtmlError(err, res);
+                                    return;
+                                }
+
+                                const orderId = orderResult.insertId;
+
+                                // Insert order items
+                                let itemsInserted = 0;
+                                reqObj.items.forEach((item) => {
+                                    db.query(
+                                        'INSERT INTO `order_items` (`order_id`, `name`, `qty`, `price`, `image`) VALUES (?, ?, ?, ?, ?)',
+                                        [orderId, item.name, item.qty, item.price, item.image || null],
+                                        (err, itemResult) => {
+                                            if (err) {
+                                                helper.ThrowHtmlError(err, res);
+                                                return;
+                                            }
+                                            itemsInserted++;
+                                            if (itemsInserted === reqObj.items.length) {
+                                                // All items inserted, emit Socket.IO event
+                                                io.emit('newOrder', {
+                                                    order_id: orderId,
+                                                    user_id: userId,
+                                                    total: parseFloat(reqObj.total),
+                                                    delivery_floor: reqObj.delivery_floor,
+                                                    delivery_notes: reqObj.delivery_notes || '',
+                                                    items: reqObj.items,
+                                                    created_date: new Date().toISOString(),
+                                                    status: 'pending'
+                                                });
+
+                                                res.json({ "status": "1", "message": "Order placed successfully by admin", "payload": { order_id: orderId } });
+                                            }
+                                        }
+                                    );
+                                });
+                            }
+                        );
+                    }
+                );
+            });
+        }, "3");
+    });
+
+    app.post('/api/user/profile', (req, res) => {
+        checkAccessToken(req.headers, res, (userObj) => {
+            db.query(
+                'SELECT name, email, mobile, address, image FROM user_detail WHERE user_id = ? AND status = "1"',
+                [userObj.user_id],
+                (err, result) => {
+                    if (err) {
+                        helper.ThrowHtmlError(err, res);
+                        return;
+                    }
+                    if (result.length > 0) {
+                        res.json({
+                            status: "1",
+                            payload: result[0],
+                            message: "Profile fetched successfully",
+                        });
+                    } else {
+                        res.json({ status: "0", message: "User not found" });
+                    }
+                }
+            );
+        }, "1");
+    });
+    
+    // app.post('/api/user/update_profile', (req, res) => {
+    //     var form = new multiparty.Form();
+    
+    //     checkAccessToken(req.headers, res, (userObj) => {
+    //         form.parse(req, (err, reqObj, files) => {
+    //             if (err) {
+    //                 helper.ThrowHtmlError(err, res);
+    //                 return;
+    //             }
+    
+    //             helper.Dlog("--------------- Parameter --------------");
+    //             helper.Dlog(reqObj);
+    //             helper.Dlog("--------------- Files --------------");
+    //             helper.Dlog(files);
+    
+    //             helper.CheckParameterValid(res, reqObj, ["name", "email", "mobile", "address"], () => {
+    //                 let imagePath = reqObj.current_image ? reqObj.current_image[0] : null;
+    //                 if (files.image && files.image[0]) {
+    //                     var extension = files.image[0].originalFilename.substring(files.image[0].originalFilename.lastIndexOf(".") + 1);
+    //                     var imageFileName = "user_images/" + helper.fileNameGenerate(extension);
+    //                     var newPath = imageSavePath + imageFileName;
+    
+    //                     fs.rename(files.image[0].path, newPath, (err) => {
+    //                         if (err) {
+    //                             helper.ThrowHtmlError(err, res);
+    //                             return;
+    //                         }
+    //                         imagePath = imageFileName;
+    //                         updateProfile();
+    //                     });
+    //                 } else {
+    //                     updateProfile();
+    //                 }
+    
+    //                 function updateProfile() {
+    //                     const updateFields = {
+    //                         name: reqObj.name[0],
+    //                         email: reqObj.email[0],
+    //                         mobile: reqObj.mobile[0],
+    //                         address: reqObj.address[0],
+    //                         image: imagePath,
+    //                         update_date: helper.getCurrentDateTime(),
+    //                     };
+    
+    //                     if (reqObj.password && reqObj.password[0]) {
+    //                         updateFields.password = helper.generateHash(reqObj.password[0]);
+    //                     }
+    
+    //                     db.query(
+    //                         'UPDATE user_detail SET ? WHERE user_id = ? AND status = "1"',
+    //                         [updateFields, userObj.user_id],
+    //                         (err, result) => {
+    //                             if (err) {
+    //                                 helper.ThrowHtmlError(err, res);
+    //                                 return;
+    //                             }
+    //                             if (result.affectedRows > 0) {
+    //                                 res.json({
+    //                                     status: "1",
+    //                                     message: "Profile updated successfully",
+    //                                 });
+    //                             } else {
+    //                                 res.json({ status: "0", message: "Failed to update profile" });
+    //                             }
+    //                         }
+    //                     );
+    //                 }
+    //             });
+    //         });
+    //     }, "1");
+    // });
+
+    // 2
+    
+    // app.post('/api/user/update_profile', (req, res) => {
+    //     helper.Dlog(req.body);
+    //     var reqObj = req.body;
+
+    //     checkAccessToken(req.headers, res, (userObj) => {
+    //         helper.CheckParameterValid(res, reqObj, ["name", "mobile",  "address",], () => {
+
+    //             db.query('UPDATE `user_detail` SET `name`=?,`mobile`=?,`address`=?,`update_date`=NOW() WHERE `user_id` = ? AND `status` = ? ', [
+    //                 reqObj.name, reqObj.mobile,  reqObj.address, userObj.user_id, "1"], (err, uResult) => {
+    //                     if (err) {
+    //                         helper.ThrowHtmlError(err, res);
+    //                         return
+    //                     }
+
+    //                     if (uResult.affectedRows > 0) {
+    //                         getUserData(userObj.user_id, (userObj) => {
+    //                             res.json({ "status": "1", "payload": userObj, "message": msg_success })
+    //                         })
+    //                     } else {
+    //                         res.json({ "status": "0", "message": msg_fail })
+    //                     }
+    //                 })
+    //         })
+
+    //     })
+    // })
+
+    app.post('/api/user/update_profile', (req, res) => {
+    const reqObj = req.body;
+    helper.Dlog(reqObj);
+    console.log(reqObj, "reqObj");
+
+    checkAccessToken(req.headers, res, (userObj) => {
+        // Check required parameters
+        const requiredParams = ["name", "email", "mobile", "address"];
+        helper.CheckParameterValid(res, reqObj, requiredParams, () => {
+
+            // Prepare fields and values for update
+            const updateFields = [];
+            const updateValues = [];
+
+            // Add fields to be updated
+            updateFields.push('`name` = ?', '`email` = ?', '`mobile` = ?', '`address` = ?');
+            updateValues.push(reqObj.name, reqObj.email, reqObj.mobile, reqObj.address);
+
+            // Hash and add password if provided
+            if (reqObj.password && reqObj.password.trim() !== "") {
+                updateFields.push('`password` = ?');
+                updateValues.push(helper.createHash(reqObj.password));
+            }
+
+            // Add update timestamp
+            updateFields.push('`update_date` = NOW()');
+
+            // Complete query
+            const updateQuery = `
+                UPDATE user_detail 
+                SET ${updateFields.join(', ')} 
+                WHERE user_id = ? AND status = ?
+            `;
+            updateValues.push(userObj.user_id, "1");
+
+            // Execute update query
+            db.query(updateQuery, updateValues, (err, uResult) => {
+                if (err) {
+                    return helper.ThrowHtmlError(err, res);
+                }
+
+                if (uResult.affectedRows > 0) {
+                    // Fetch updated user data
+                    getUserData(userObj.user_id, (newUserObj) => {
+                        res.json({ status: "1", payload: newUserObj, message: msg_success });
+                    });
+                } else {
+                    res.json({ status: "0", message: msg_fail });
+                }
+            });
+        });
+    });
+    });
+
+    app.post('/api/user/order_history', (req, res) => {
+        helper.Dlog(req.body);
+        var reqObj = req.body;
+    
+        checkAccessToken(req.headers, res, (userObj) => {
+            // Prepare query parameters
+            const userId = userObj.user_id;
+            let query = 'SELECT `order_id`, `user_id`, `total`, `delivery_floor`, `delivery_notes`, `created_date`, `status` FROM `orders` WHERE `user_id` = ? AND `status` != ?';
+            let queryParams = [userId, "deleted"];
+    
+            // Add date filtering if provided
+            if (reqObj.start_date && reqObj.end_date) {
+                query += ' AND `created_date` BETWEEN ? AND ?';
+                queryParams.push(reqObj.start_date, reqObj.end_date);
+            }
+    
+            db.query(query, queryParams, (err, orderResult) => {
+                if (err) {
+                    helper.ThrowHtmlError(err, res);
+                    return;
+                }
+    
+                let orders = [];
+    
+                if (orderResult.length === 0) {
+                    res.json({
+                        "status": "1",
+                        "payload": [],
+                        "message": "Success"
+                    });
+                    return;
+                }
+    
+                orderResult.forEach((order) => {
+                    db.query('SELECT `name`, `qty`, `price`, `image` FROM `order_items` WHERE `order_id` = ?', [
+                        order.order_id], (err, itemsResult) => {
+                            if (err) {
+                                helper.ThrowHtmlError(err, res);
+                                return;
+                            }
+    
+                            orders.push({
+                                order_id: order.order_id,
+                                user_id: order.user_id,
+                                total: order.total,
+                                delivery_floor: order.delivery_floor,
+                                delivery_notes: order.delivery_notes,
+                                created_date: order.created_date,
+                                status: order.status,
+                                items: itemsResult
+                            });
+    
+                            if (orders.length === orderResult.length) {
+                                // Sort orders by created_date (descending)
+                                orders.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+    
+                                res.json({
+                                    "status": "1",
+                                    "payload": orders,
+                                    "message": "Success"
+                                });
+                            }
+                        });
+                });
+            });
+        }, "1"); // Assuming "1" is the role for regular users
+    });
+
+    function getUserData(user_id, callback) {
+        db.query('SELECT `user_id`, `name`, `email`, `password`, `mobile`, `address`, `image`, `device_type`, `auth_token`, `user_type` FROM `user_detail` WHERE `user_id` = ? AND `status` = ?', [user_id, '1'], (err, result) => {
             if (err) {
-                helper.ThrowHtmlError(err, res);
+                helper.ThrowHtmlError(err);
                 return;
             }
 
-            helper.Dlog(result);
             if (result.length > 0) {
-                if (require_type != "") {
-
-                    if (result[0].user_type == require_type) {
-                        return callback(result[0]);
-                    } else {
-                        res.json({ "status": "0", "code": "404", "message": "Access denied. Unauthorized user access." })
-                    }
-                } else {
-                    return callback(result[0]);
-                }
-            } else {
-                res.json({ "status": "0", "code": "404", "message": "Access denied. Unauthorized user access." })
+                return callback(result[0])
             }
         })
-    })
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+    }
+
+    function checkAccessToken(headerObj, res, callback, require_type = "") {
+        helper.Dlog(headerObj.access_token);
+        helper.CheckParameterValid(res, headerObj, ["access_token"], () => {
+            db.query('SELECT `user_id`, `name`, `email`, `password`, `mobile`, `address`, `image`, `device_type`, `auth_token`, `user_type`, `status`  FROM `user_detail` WHERE `auth_token` = ? AND `status` = ?', [headerObj.access_token, "1"], (err, result) => {
+                if (err) {
+                    helper.ThrowHtmlError(err, res);
+                    return;
+                }
+
+                helper.Dlog(result);
+                if (result.length > 0) {
+                    if (require_type != "") {
+                        if (result[0].user_type == require_type) {
+                            return callback(result[0]);
+                        } else {
+                            res.json({ "status": "0", "code": "404", "message": "Access denied. Unauthorized user access." })
+                        }
+                    } else {
+                        return callback(result[0]);
+                    }
+                } else {
+                    res.json({ "status": "0", "code": "404", "message": "Access denied. Unauthorized user access." })
+                }
+            })
+        })
+    }
+}

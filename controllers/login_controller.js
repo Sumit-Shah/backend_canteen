@@ -184,32 +184,56 @@ module.exports.controller = (app, io, socket_list) => {
         })
     })
 
-    app.post('/api/update_profile', (req, res) => {
-        helper.Dlog(req.body);
-        var reqObj = req.body;
+    // app.post('/api/user/profile', (req, res) => {
+    //     checkAccessToken(req.headers, res, (userObj) => {
+    //         db.query(
+    //             'SELECT name, email, mobile, address, image FROM user_detail WHERE user_id = ? AND status = "1"',
+    //             [userObj.user_id],
+    //             (err, result) => {
+    //                 if (err) {
+    //                     helper.ThrowHtmlError(err, res);
+    //                     return;
+    //                 }
+    //                 if (result.length > 0) {
+    //                     res.json({
+    //                         status: "1",
+    //                         payload: result[0],
+    //                         message: "Profile fetched successfully",
+    //                     });
+    //                 } else {
+    //                     res.json({ status: "0", message: "User not found" });
+    //                 }
+    //             }
+    //         );
+    //     }, "1");
+    // });
 
-        checkAccessToken(req.headers, res, (userObj) => {
-            helper.CheckParameterValid(res, reqObj, ["name", "mobile",  "address",], () => {
+    // app.post('/api/update_profile', (req, res) => {
+    //     helper.Dlog(req.body);
+    //     var reqObj = req.body;
 
-                db.query('UPDATE `user_detail` SET `name`=?,`mobile`=?,`address`=?,`update_date`=NOW() WHERE `user_id` = ? AND `status` = ? ', [
-                    reqObj.name, reqObj.mobile,  reqObj.address, userObj.user_id, "1"], (err, uResult) => {
-                        if (err) {
-                            helper.ThrowHtmlError(err, res);
-                            return
-                        }
+    //     checkAccessToken(req.headers, res, (userObj) => {
+    //         helper.CheckParameterValid(res, reqObj, ["name", "mobile",  "address",], () => {
 
-                        if (uResult.affectedRows > 0) {
-                            getUserData(userObj.user_id, (userObj) => {
-                                res.json({ "status": "1", "payload": userObj, "message": msg_success })
-                            })
-                        } else {
-                            res.json({ "status": "0", "message": msg_fail })
-                        }
-                    })
-            })
+    //             db.query('UPDATE `user_detail` SET `name`=?,`mobile`=?,`address`=?,`update_date`=NOW() WHERE `user_id` = ? AND `status` = ? ', [
+    //                 reqObj.name, reqObj.mobile,  reqObj.address, userObj.user_id, "1"], (err, uResult) => {
+    //                     if (err) {
+    //                         helper.ThrowHtmlError(err, res);
+    //                         return
+    //                     }
 
-        })
-    })
+    //                     if (uResult.affectedRows > 0) {
+    //                         getUserData(userObj.user_id, (userObj) => {
+    //                             res.json({ "status": "1", "payload": userObj, "message": msg_success })
+    //                         })
+    //                     } else {
+    //                         res.json({ "status": "0", "message": msg_fail })
+    //                     }
+    //                 })
+    //         })
+
+    //     })
+    // })
 
     app.post('/api/update_image', (req, res) => {
 

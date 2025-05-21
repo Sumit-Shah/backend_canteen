@@ -1,0 +1,11 @@
+TypeError: helper.createHash is not a function
+    at /home/shah/Documents/backend_canteen/controllers/admin_controller.js:717:42
+    at Object.CheckParameterValid (/home/shah/Documents/backend_canteen/helpers/helpers.js:75:20)
+    at /home/shah/Documents/backend_canteen/controllers/admin_controller.js:704:16
+    at /home/shah/Documents/backend_canteen/controllers/admin_controller.js:849:32
+    at Query.<anonymous> (/home/shah/Documents/backend_canteen/helpers/db_helpers.js:67:24)
+    at Query.<anonymous> (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/Connection.js:488:16)
+    at Sequence.end (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query._handleFinalResultPacket (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/sequences/Query.js:149:8)
+    at Query.EofPacket (/home/shah/Documents/backend_canteen/node_modules/mysql/lib/protocol/sequences/Query.js:133:8)

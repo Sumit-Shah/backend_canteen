@@ -1,0 +1,8 @@
+TypeError: helper.generateHash is not a function
+    at updateProfile (/home/shah/Documents/backend_canteen/controllers/admin_controller.js:640:60)
+    at /home/shah/Documents/backend_canteen/controllers/admin_controller.js:626:25
+    at Object.CheckParameterValid (/home/shah/Documents/backend_canteen/helpers/helpers.js:75:20)
+    at /home/shah/Documents/backend_canteen/controllers/admin_controller.js:610:24
+    at /home/shah/Documents/backend_canteen/node_modules/multiparty/index.js:139:9
+    at /home/shah/Documents/backend_canteen/node_modules/multiparty/index.js:118:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
